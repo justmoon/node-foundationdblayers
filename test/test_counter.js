@@ -52,7 +52,7 @@
 
                     var t = fdb.tuple.pack(["testcounterclear"])
 
-                    // first check that the counter does === 8
+                    // first check that the identifier does === 8
                     funcs.push(function(fcallback) {
                         db.getRangeStartsWith(t, null, function(err, kvp) {
 
@@ -68,7 +68,7 @@
                         });
                     });
 
-                    // clear the counter.
+                    // clear the identifier.
                     funcs.push(function(fcallback) {
                         db.doTransaction(function(tr, trcallback) {
                             var counter = new cLayer(tr, "testcounterclear");
@@ -80,7 +80,7 @@
                         });
                     });
 
-                    // counter should now === 0
+                    // identifier should now === 0
                     funcs.push(function(fcallback) {
                         db.getRangeStartsWith(t, null, function(err, kvp) {
 
@@ -118,6 +118,56 @@
                 });
             });
 
+            it("do not supply update value, loop 100 times and get back a value of 100", function(done) {
+
+                var funcs = [];
+
+                fdb.open(null, null, function(err, db) {
+
+                    if(err)
+                        return done(err);
+
+                    db.doTransaction(function(tr, trcallback) {
+
+                        var counter = new cLayer(tr, "testcountersetandget");
+
+                        for(let x= 0, l = 100; x < l; x++)
+                        {
+                            (function(idx) {
+                                funcs.push(function(callback){
+                                    counter.update(function(err) {
+                                        return callback(err);
+                                    });
+                                });
+                            })(x);
+                        }
+
+                        async.parallel(funcs, function(err) {
+                            return trcallback(err);
+                        });
+
+
+                    }, function(err) {
+
+                        db.doTransaction(function(tr, trcallback) {
+
+                            var getcounter = new cLayer(tr, "testcountersetandget");
+
+                            getcounter.get(function(err, cval) {
+                                return trcallback(err, cval);
+                            });
+                        }, function(err, getval) {
+
+                            if(err)
+                                return done(err);
+
+                            assert.equal(100, getval);
+
+                            return done();
+                        });
+                    });
+                });
+            });
 
             it("set 100 increments and get back a value of 100", function(done) {
 
@@ -170,7 +220,6 @@
                 });
             });
 
-
             it("set 100 decrements and get back a value of -100", function(done) {
 
                 var funcs = [];
@@ -221,7 +270,6 @@
                     });
                 });
             });
-
 
             it("set increments from 1 to 99 and get back a value of 10000", function(done) {
 
@@ -274,7 +322,6 @@
                 });
             });
 
-
             it("set decrements from -1 to -99 and get back a value of -10000", function(done) {
 
                 var funcs = [];
@@ -325,7 +372,6 @@
                     });
                 });
             });
-
 
         });
     });
