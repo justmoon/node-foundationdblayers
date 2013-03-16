@@ -24,7 +24,6 @@
                 });
             });
 
-
             it('adding 100 individual strings within a transaction to a queue', function(done){
 
                 var outerfuncs = [], innerfuncs = [];
@@ -50,7 +49,7 @@
                                 })(x);
                             }
 
-                            async.parallel(innerfuncs, function(err) {
+                            async.series(innerfuncs, function(err) {
                                 return innercallback(err);
                             });
                         }, function(err) {

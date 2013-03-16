@@ -105,9 +105,6 @@
 
         });
 
-
-
-
         describe('#update and #get()', function() {
 
             beforeEach(function(done) {
@@ -360,6 +357,7 @@
                             getcounter.get(function(err, cval) {
                                 return trcallback(err, cval);
                             });
+
                         }, function(err, getval) {
 
                             if(err)
