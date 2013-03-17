@@ -28,32 +28,61 @@
         </ul>
       </header>
       <section>
-        <h3>Welcome to GitHub Pages.</h3>
+        <h3>FoundationDB Layers for Node.js</h3>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<p>This library offers a set of layers to use with the <a href="http://www.foundationdb.com/">FoundationDB database</a>.  FoundationDB
+is an interesting, new noSQL variant that combines true ACID transactions across server instances and multiple key/value pairs.
+In order to take full advantage of the FoundationDB paradigm, the developer must create layers that wrap key/value pair transactions.
+The FoundationDB Layers for Node.js library provides basic structures such as <strong>counter</strong> and <strong>array</strong>, as well as more advanced layers:</p>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
+<ul>
+<li><strong>Queue Layer (FIFO and LIFO)</strong></li>
+<li><strong>Capped List Layer</strong></li>
+<li><strong>Table Layer</strong></li>
+</ul><p>Upcomming layers include:</p>
+
+<ul>
+<li><strong>Bloom Filter Layer</strong></li>
+<li><strong>Density Set Layer</strong></li>
+<li><strong>Social Graph Layer</strong></li>
+<li><strong>TTL Expiration Layer</strong></li>
+<li><strong>Column Index Layer</strong></li>
+<li><strong>Table Filter Layer</strong></li>
+</ul><h2>Installation</h2>
+
+<p>The library can be installed from NPM:</p>
+
+<pre><code>npm install node-foundationdblayers
 </code></pre>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+<p>Note that the use of the library requires installation of the FoundationDB client infrastructure.  See the <a href="http://www.foundationdb.com/documentation/beta1/api-node.html">FDB Node API
+docs</a>.</p>
 
-<h3>Designer Templates</h3>
+<h2>Documentation</h2>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+<h3>Data Types</h3>
 
-<h3>Rather Drive Stick?</h3>
+<p>The library handles strings, integers, decimals, booleans, dates, arrays and objects.  In order to intelligently retrieve
+the correct datatype back from the database, values saved into the database are encoded as a tuple with 2 values.  The first
+value is the datatype.  The second value is the "real" value.  As long as data is retrieved via the library, the data returned
+from any function will be properly translated into its appropriate javascript type.  If data is retrieved directly from the
+database without going through the library, use the first unpacked tuple value to determine the type stored in the buffer:</p>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+<ul>
+<li>string = 0</li>
+<li>integer = 1</li>
+<li>decimal = 2</li>
+<li>boolean = 3</li>
+<li>date = 4</li>
+<li>arrays = 5</li>
+<li>objects = 5</li>
+</ul><p>The library only supports integers between the values of -9007199254740993 and 9007199254740991 because these
+are the limits of what javascript can handle with precision.  If you need to support values larger or smaller, turn to
+one of the bigint/bigdecimal libraries and convert the values to strings before storing int the library.</p>
 
-<h3>Authors and Contributors</h3>
+<p>Decimals are stored as string buffers and then are converted to floats when extracted.</p>
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-
-<h3>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+<p>Arrays and objects are stored as JSON strings and are converted back to the original array/object via JSON parse when retrieved.</p>
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/agad">agad</a></p>
