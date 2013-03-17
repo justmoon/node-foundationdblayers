@@ -6,15 +6,15 @@ is an interesting, new noSQL variant that combines true ACID transactions across
 In order to take full advantage of the FoundationDB paradigm, the developer must create layers that wrap key/value pair transactions.
 The FoundationDB Layers for Node.js library provides basic structures such as **counter** and **array**, as well as more advanced layers:
 
-- **Queue Layer (FIFO and LIFO)**
-- **Table Layer**
-- **Bloom Filter Layer**
+- **Queue Layer (FIFO and LIFO)** - implements First-In/First-Out or Last-In/Last-Out queues.
+- **Table Layer** - store related data in row/column format used in traditional RDBMS systems.
+- **Bloom Filter Layer** - a space-efficient data structure that tests whether an element is a set member. False positives are possible.  False negatives are not possible.
+- **Scored Set Layer** - simple data structure that tracks scores for specific ids.  Adding an element to the set increments its score, removing the element decrements the score.
 
 Upcomming layers include:
 
 - **Capped List Layer**
-- **Density Set Layer**
-- **Social Graph Layer**
+- **Graph Layer**
 - **TTL Expiration Layer**
 - **Column Index Layer**
 - **Table Filter Layer**
@@ -47,10 +47,11 @@ database without going through the library, use the first unpacked tuple value t
 - date = 4
 - arrays = 5
 - objects = 5
+- NULL = 6
 
 The library only supports integers between the values of -9007199254740993 and 9007199254740991 because these
 are the limits of what javascript can handle with precision.  If you need to support values larger or smaller, turn to
-one of the bigint/bigdecimal libraries and convert the values to strings before storing int the library.
+one of the bigint/bigdecimal libraries and convert the values to strings before storing in the library.
 
 Decimals are stored as string buffers and then are converted to floats when extracted.
 
