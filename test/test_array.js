@@ -6,8 +6,7 @@
     var async = require("async");
     var assert = require("chai").assert;
 
-    describe.only('Array', function(){
-
+    describe('Array', function(){
 
             beforeEach(function(done) {
                 fdb.open(null, null, function(err, db) {
