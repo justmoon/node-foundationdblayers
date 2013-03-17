@@ -14,7 +14,10 @@ Upcomming layers include:
 
 - **Bloom Filter Layer**
 - **Density Set Layer**
-- **Social Graph**
+- **Social Graph Layer**
+- **TTL Expiration Layer**
+- **Column Index Layer**
+- **Table Filter Layer**
 
 ## Installation
 
@@ -40,10 +43,10 @@ database without going through the library, use the first unpacked tuple value t
 - string = 0
 - integer = 1
 - decimal = 2
-- boolean = 4
-- date = 5
-- arrays = 6
-- objects = 7
+- boolean = 3
+- date = 4
+- arrays = 5
+- objects = 5
 
 The library only supports integers between the values of -9007199254740993 and 9007199254740991 because these
 are the limits of what javascript can handle with precision.  If you need to support values larger or smaller, turn to
