@@ -7,12 +7,12 @@ In order to take full advantage of the FoundationDB paradigm, the developer must
 The FoundationDB Layers for Node.js library provides basic structures such as **counter** and **array**, as well as more advanced layers:
 
 - **Queue Layer (FIFO and LIFO)**
-- **Capped List Layer**
 - **Table Layer**
+- **Bloom Filter Layer**
 
 Upcomming layers include:
 
-- **Bloom Filter Layer**
+- **Capped List Layer**
 - **Density Set Layer**
 - **Social Graph Layer**
 - **TTL Expiration Layer**
