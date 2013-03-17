@@ -1,7 +1,7 @@
 {
     "author": "Alex Gadea <alex.gadea@leaflevellabs.com>",
     "name": "node_foundationdblayers",
-    "homepage": "https://github.com/agad/node_foundationdblayers",
+    "homepage": "http://agad.github.com/node-foundationdblayers/",
     "description": "Layers for FoundationDb written in node.js",
     "licenses" : [
         {
@@ -21,9 +21,9 @@
     "engines": {
         "node": ">=0.8"
     },
+    "keywords" : ["foundationdb", "database", "client"],
     "dependencies": {
         "async": "0.2.6",
-        "bigdecimal": "0.6.1",
         "sugar": "1.3.8",
         "fdb": "0.2.1",
         "murmurhash" : "0.0.2"
