@@ -25,7 +25,6 @@
             assert.equal(utils.unpack(utils.pack(-1110.25)), -1110.25);
         });
 
-
         it("boolean values", function() {
             assert.isTrue(utils.unpack(utils.pack(true)));
             assert.isFalse(utils.unpack(utils.pack(false)));

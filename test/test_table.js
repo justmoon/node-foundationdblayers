@@ -479,7 +479,7 @@
         });
 
 
-        it.only("#setrow() then #delete()", function(done)
+        it("#setrow() then #delete()", function(done)
         {
             var outerfuncs = [], innerfuncs = [];
 
