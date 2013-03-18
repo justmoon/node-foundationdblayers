@@ -65,15 +65,19 @@ Arrays and objects are stored as JSON strings and are converted back to the orig
 
 A sparse array representation, with the ability to set specific indexes, push, pop, shift, and unset.
 
-** new ArrayLayer(transaction, identifier) **
+**new ArrayLayer(transaction, identifier)**
+
 Class constructor.
 
+Params:
 - transaction : an FDB transaction.
 - identifier : a string, integer or array used to identify the array.
 
-** ArrayLayer.set(index, val, callback) **
+**ArrayLayer.set(index, val, callback)**
+
 Sets a specific index in the array.
 
+Params:
 - index : a positive integer representing the array position to set the value.
 - val : any supported datatype
 - callback: function callback
