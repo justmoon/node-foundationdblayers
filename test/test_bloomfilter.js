@@ -7,7 +7,7 @@
     var async       = require("async");
     var assert      = require("chai").assert;
 
-    describe.only('BloomFilter', function(){
+    describe('BloomFilter', function(){
 
         beforeEach(function(done) {
             fdb.open(null, null, function(err, db) {
