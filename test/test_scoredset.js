@@ -75,7 +75,7 @@
                 });
 
                 async.series(outerfuncs, function(err, results) {
-                    console.log(results)
+
                     assert.equal(results[0].length, 100);
                     assert.equal(results[1].length, 100);
                     assert.equal(results[2].length, 100);
@@ -454,7 +454,6 @@
             });
         });
 
-
         it('#add() multiple ids then #getscores() using minscore and maxscore', function(done) {
             var outerfuncs = [];
 
@@ -531,7 +530,7 @@
 
                         var s = new SLayer(tr, testid);
 
-                        s.getscores(2, 3, 1, function(err, scores) {
+                        s.getscores(2, 3, { limit:1 }, function(err, scores) {
                             return innercallback(err, scores);
                         });
 
@@ -545,6 +544,111 @@
                     assert.equal(results[1].length, 1);
                     assert.equal(results[1][0][0], "jane");
                     assert.equal(results[1][0][1], 2);
+                    return done(err);
+                });
+
+            });
+        });
+
+        it('#add() multiple ids then #getscores() using minscore, maxscore and reverse', function(done) {
+            var outerfuncs = [];
+
+            fdb.open(null, null, function(err, db) {
+
+                if(err)
+                    return done(err);
+
+                outerfuncs.push(function(outercallback) {
+                    db.doTransaction(function(tr, innercallback) {
+
+                        var s = new SLayer(tr, testid);
+
+                        s.add(["joe", "jim", "jane", "joe", "joe", "joe", "jane", "jerry", "janine", "jerry", "jerry", "james", "zeno",  "zeno",  "zeno",  "zeno"], function(err, newscores) {
+                            return innercallback(err, newscores);
+                        });
+
+                    }, function(err, allscores) {
+                        return outercallback(err, allscores)
+                    });
+                });
+
+                outerfuncs.push(function(outercallback) {
+                    db.doTransaction(function(tr, innercallback) {
+
+                        var s = new SLayer(tr, testid);
+
+                        s.getscores(2, 4, {reverse:true}, function(err, scores) {
+                            return innercallback(err, scores);
+                        });
+
+                    }, function(err, scores) {
+                        return outercallback(err, scores);
+                    });
+                });
+
+                async.series(outerfuncs, function(err, results) {
+
+                    assert.equal(results[1].length, 4);
+                    assert.equal(results[1][3][0], "jane");
+                    assert.equal(results[1][3][1], 2);
+                    assert.equal(results[1][2][0], "jerry");
+                    assert.equal(results[1][2][1], 3);
+                    assert.equal(results[1][1][0], "joe");
+                    assert.equal(results[1][1][1], 4);
+                    assert.equal(results[1][0][0], "zeno");
+                    assert.equal(results[1][0][1], 4);
+                    return done(err);
+                });
+
+            });
+        });
+
+
+        it('#add() multiple ids then #getscores() using minscore, maxscore, limit and reverse', function(done) {
+            var outerfuncs = [];
+
+            fdb.open(null, null, function(err, db) {
+
+                if(err)
+                    return done(err);
+
+                outerfuncs.push(function(outercallback) {
+                    db.doTransaction(function(tr, innercallback) {
+
+                        var s = new SLayer(tr, testid);
+
+                        s.add(["joe", "jim", "jane", "joe", "joe", "joe", "jane", "jerry", "janine", "jerry", "jerry", "james", "zeno",  "zeno",  "zeno",  "zeno"], function(err, newscores) {
+                            return innercallback(err, newscores);
+                        });
+
+                    }, function(err, allscores) {
+                        return outercallback(err, allscores)
+                    });
+                });
+
+                outerfuncs.push(function(outercallback) {
+                    db.doTransaction(function(tr, innercallback) {
+
+                        var s = new SLayer(tr, testid);
+
+                        s.getscores(2, 4, {reverse:true, limit: 3}, function(err, scores) {
+                            return innercallback(err, scores);
+                        });
+
+                    }, function(err, scores) {
+                        return outercallback(err, scores);
+                    });
+                });
+
+                async.series(outerfuncs, function(err, results) {
+
+                    assert.equal(results[1].length, 3);
+                    assert.equal(results[1][2][0], "jerry");
+                    assert.equal(results[1][2][1], 3);
+                    assert.equal(results[1][1][0], "joe");
+                    assert.equal(results[1][1][1], 4);
+                    assert.equal(results[1][0][0], "zeno");
+                    assert.equal(results[1][0][1], 4);
                     return done(err);
                 });
 
