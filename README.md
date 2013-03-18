@@ -6,15 +6,15 @@ is an interesting, new noSQL variant that combines true ACID transactions across
 In order to take full advantage of the FoundationDB paradigm, the developer must create layers that wrap key/value pair transactions.
 The FoundationDB Layers for Node.js library provides basic structures such as **counter** and **array**, as well as more advanced layers:
 
-- **Queue Layer (FIFO and LIFO)** - implements First-In/First-Out or Last-In/Last-Out queues.
+- **Queue Layer (FIFO queues and LIFO stacks)** - implements First-In/First-Out or Last-In/First-Out.
 - **Table Layer** - store related data in row/column format used in traditional RDBMS systems.
 - **Bloom Filter Layer** - a space-efficient data structure that tests whether an element is a set member. False positives are possible.  False negatives are not possible.
 - **Scored Set Layer** - simple data structure that tracks scores for specific ids.  Adding an element to the set increments its score, removing the element decrements the score.
+- **Relationship Graph Layer** - track parent -> child and bidirectional relationships.
 
 Upcomming layers include:
 
 - **Capped List Layer**
-- **Graph Layer**
 - **TTL Expiration Layer**
 - **Column Index Layer**
 - **Table Filter Layer**
@@ -32,8 +32,6 @@ Note that the use of the library requires installation of the FoundationDB clien
 docs](http://www.foundationdb.com/documentation/beta1/api-node.html).
 
 ## Documentation
-
-
 
 ### Data Types
 
@@ -59,3 +57,39 @@ one of the bigint/bigdecimal libraries and convert the values to strings before 
 Decimals are stored as string buffers and then are converted to floats when extracted.
 
 Arrays and objects are stored as JSON strings and are converted back to the original array/object via JSON parse when retrieved.
+
+
+### API
+
+#### Array Layer
+
+A sparse array representation, with the ability to set specific indexes, push, pop, shift, and unset.
+
+** new ArrayLayer(transaction, identifier) **
+Class constructor.
+
+- transaction : an FDB transaction.
+- identifier : a string, integer or array used to identify the array.
+
+** ArrayLayer.set(index, val, callback) **
+Sets a specific index in the array.
+
+- index : a positive integer representing the array position to set the value.
+- val : any supported datatype
+- callback: function callback
+
+
+
+#### Bloom Filter Layer
+
+
+#### Counter Layer
+
+
+#### Graph Layer
+
+
+#### Queue Layer
+
+
+#### Table Layer
