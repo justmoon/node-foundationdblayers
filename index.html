@@ -37,22 +37,24 @@ The FoundationDB Layers for Node.js library provides basic structures such as <s
 
 <ul>
 <li>
-<strong>Queue Layer (FIFO and LIFO)</strong> - implements First-In/First-Out or Last-In/Last-Out queues.</li>
+<strong>Queue Layer (FIFO queues and LIFO stacks)</strong> - implements First-In/First-Out or Last-In/First-Out.</li>
 <li>
 <strong>Table Layer</strong> - store related data in row/column format used in traditional RDBMS systems.</li>
 <li>
 <strong>Bloom Filter Layer</strong> - a space-efficient data structure that tests whether an element is a set member. False positives are possible.  False negatives are not possible.</li>
 <li>
 <strong>Scored Set Layer</strong> - simple data structure that tracks scores for specific ids.  Adding an element to the set increments its score, removing the element decrements the score.</li>
+<li>
+<strong>Relationship Graph Layer</strong> - track parent -&gt; child and bidirectional relationships.</li>
 </ul><p>Upcomming layers include:</p>
 
 <ul>
 <li><strong>Capped List Layer</strong></li>
-<li><strong>Graph Layer</strong></li>
 <li><strong>TTL Expiration Layer</strong></li>
 <li><strong>Column Index Layer</strong></li>
 <li><strong>Table Filter Layer</strong></li>
-</ul><p>Please note this library is considered alpha.  Although there are functional and unit tests around the layers, no performance tuning has been done and the code is still considered very rough.  Use the layers at your own risk (or help us enhance and provide fixes).</p>
+</ul><p>Please note this library is considered alpha.  Although there are functional and unit tests around the layers, no performance tuning has been done and the code is still considered very rough.  Use the layers in
+real projects at your own risk.</p>
 
 <h2>Installation</h2>
 
@@ -90,6 +92,41 @@ one of the bigint/bigdecimal libraries and convert the values to strings before 
 <p>Decimals are stored as string buffers and then are converted to floats when extracted.</p>
 
 <p>Arrays and objects are stored as JSON strings and are converted back to the original array/object via JSON parse when retrieved.</p>
+
+<h3>API</h3>
+
+<h4>Array Layer</h4>
+
+<p>A sparse array representation, with the ability to set specific indexes, push, pop, shift, and unset.</p>
+
+<p><strong>new ArrayLayer(transaction, identifier)</strong></p>
+
+<p>Class constructor.</p>
+
+<p>Params:</p>
+
+<ul>
+<li>transaction : an FDB transaction.</li>
+<li>identifier : a string, integer or array used to identify the array.</li>
+</ul><p><strong>ArrayLayer.set(index, val, callback)</strong></p>
+
+<p>Sets a specific index in the array.</p>
+
+<p>Params:</p>
+
+<ul>
+<li>index : a positive integer representing the array position to set the value.</li>
+<li>val : any supported datatype</li>
+<li>callback: function callback</li>
+</ul><h4>Bloom Filter Layer</h4>
+
+<h4>Counter Layer</h4>
+
+<h4>Graph Layer</h4>
+
+<h4>Queue Layer</h4>
+
+<h4>Table Layer</h4>
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/agad">agad</a></p>
