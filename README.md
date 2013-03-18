@@ -1,4 +1,4 @@
-FoundationDB Layers for Node.js
+FoundationDB Layers for Node.js (alpha)
 ===============================
 
 This library offers a set of layers to use with the [FoundationDB database](http://www.foundationdb.com/).  FoundationDB
@@ -18,6 +18,9 @@ Upcomming layers include:
 - **TTL Expiration Layer**
 - **Column Index Layer**
 - **Table Filter Layer**
+
+Please note this library is considered alpha.  Although there are functional and unit tests around the layers, no performance tuning has been done and the code is still considered very rough.  Use the layers in
+real projects at your own risk.
 
 ## Installation
 
