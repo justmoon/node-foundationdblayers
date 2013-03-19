@@ -9,7 +9,7 @@
             "url" : "http://github.com/agad/node_foundationdblayers/raw/master/LICENSE"
         }
     ],
-    "version": "0.0.2",
+    "version": "0.0.3",
     "repository": {
         "type": "git",
         "url": "https://github.com/agad/node-foundationdblayers.git"
