@@ -34,4 +34,4 @@ docs](http://www.foundationdb.com/documentation/beta1/api-node.html).
 
 ## Documentation
 
-    Visit [http://agad.github.com/node-foundationdblayers/](http://agad.github.com/node-foundationdblayers/) for API documentation.
+Visit [http://agad.github.com/node-foundationdblayers/](http://agad.github.com/node-foundationdblayers/) for API documentation.
