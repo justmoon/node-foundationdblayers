@@ -27,7 +27,7 @@ real projects at your own risk.
 
 The library can be installed from NPM:
 
-    npm install node-foundationdblayers
+    npm install node_foundationdblayers
 
 Note that the use of the library requires installation of the FoundationDB client infrastructure.  See the [FDB Node API
 docs](http://www.foundationdb.com/documentation/beta1/api-node.html).
