@@ -10,7 +10,8 @@ The FoundationDB Layers for Node.js library provides basic structures such as **
 - **Table Layer** - store related data in row/column format used in traditional RDBMS systems.
 - **Bloom Filter Layer** - a space-efficient data structure that tests whether an element is a set member. False positives are possible.  False negatives are not possible.
 - **Scored Set Layer** - simple data structure that tracks scores for specific ids.  Adding an element to the set increments its score, removing the element decrements the score.
-- **Relationship Graph Layer** - track parent -> child and bidirectional relationships.
+- **Relationship Graph Layer** - track parent -> child and bidirectional relationships.  Good for tracking relationships such as friends
+(ie: Facebook relationship type) and follows/follower (ie: Twitter relationship type).  Can also be used to model RDBMS data relationships such as one-to-one, one-to-many and many-to-many.
 
 Upcomming layers include:
 
@@ -33,67 +34,4 @@ docs](http://www.foundationdb.com/documentation/beta1/api-node.html).
 
 ## Documentation
 
-### Data Types
-
-The library handles strings, integers, decimals, booleans, dates, arrays and objects.  In order to intelligently retrieve
-the correct datatype back from the database, values saved into the database are encoded as a tuple with 2 values.  The first
-value is the datatype.  The second value is the "real" value.  As long as data is retrieved via the library, the data returned
-from any function will be properly translated into its appropriate javascript type.  If data is retrieved directly from the
-database without going through the library, use the first unpacked tuple value to determine the type stored in the buffer:
-
-- string = 0
-- integer = 1
-- decimal = 2
-- boolean = 3
-- date = 4
-- arrays = 5
-- objects = 5
-- NULL = 6
-
-The library only supports integers between the values of -9007199254740993 and 9007199254740991 because these
-are the limits of what javascript can handle with precision.  If you need to support values larger or smaller, turn to
-one of the bigint/bigdecimal libraries and convert the values to strings before storing in the library.
-
-Decimals are stored as string buffers and then are converted to floats when extracted.
-
-Arrays and objects are stored as JSON strings and are converted back to the original array/object via JSON parse when retrieved.
-
-
-### API
-
-#### Array Layer
-
-A sparse array representation, with the ability to set specific indexes, push, pop, shift, and unset.
-
-**new ArrayLayer(transaction, identifier)**
-
-Class constructor.
-
-Params:
-- transaction : an FDB transaction.
-- identifier : a string, integer or array used to identify the array.
-
-**ArrayLayer.set(index, val, callback)**
-
-Sets a specific index in the array.
-
-Params:
-- index : a positive integer representing the array position to set the value.
-- val : any supported datatype
-- callback: function callback
-
-
-
-#### Bloom Filter Layer
-
-
-#### Counter Layer
-
-
-#### Graph Layer
-
-
-#### Queue Layer
-
-
-#### Table Layer
+    Visit [http://agad.github.com/node-foundationdblayers/](http://agad.github.com/node-foundationdblayers/) for API documentation.
